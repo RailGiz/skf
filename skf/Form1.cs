@@ -64,7 +64,7 @@ namespace skf
         {
             string input = textBox1.Text;
             // Разбор входного текста и создание экземпляра Function, например:
-            function = new Function(x => x*x*x);
+            function = new Function(x => Math.Cos(x));
 
             // Получение границ и количества шагов
             double lowerBound = Convert.ToDouble(textBox2.Text);
@@ -107,13 +107,39 @@ namespace skf
             }
         }
 
+        private void DrawTrapezoids(Graphics g)
+        {
+            if (integration == null || function == null) return;
 
+            int width = panel1.Width;
+            int height = panel1.Height;
+            Pen pen = new Pen(Color.Red, 1);
+
+            double stepSize = (integration.UpperBound - integration.LowerBound) / integration.NumberOfSteps;
+            for (int i = 0; i < integration.NumberOfSteps; i++)
+            {
+                double x1 = integration.LowerBound + i * stepSize;
+                double x2 = integration.LowerBound + (i + 1) * stepSize;
+                double y1 = function.Evaluate(x1);
+                double y2 = function.Evaluate(x2);
+
+                int screenX1 = (int)((x1 * 50) + width / 2);
+                int screenX2 = (int)((x2 * 50) + width / 2);
+                int screenY1 = height / 2 - (int)(y1 * 50);
+                int screenY2 = height / 2 - (int)(y2 * 50);
+
+                g.DrawLine(pen, screenX1, screenY1, screenX2, screenY2); // Верхняя сторона трапеции
+                g.DrawLine(pen, screenX1, screenY1, screenX1, height / 2); // Левая сторона трапеции
+                g.DrawLine(pen, screenX2, screenY2, screenX2, height / 2); // Правая сторона трапеции
+            }
+        }
         private void panel1_Paint_1(object sender, PaintEventArgs e)
         {
             Graphics g = e.Graphics;
 
             DrawAxes(g);
             DrawFunction(g);
+            DrawTrapezoids(g);
         }
 
         private void button1_Click_1(object sender, EventArgs e)
