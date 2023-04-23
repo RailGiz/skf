@@ -64,7 +64,7 @@ namespace skf
         {
             string input = textBox1.Text;
             // Разбор входного текста и создание экземпляра Function, например:
-            function = new Function(x => Math.Cos(x));
+            function = new Function(x => 1/x);
 
             // Получение границ и количества шагов
             double lowerBound = Convert.ToDouble(textBox2.Text);

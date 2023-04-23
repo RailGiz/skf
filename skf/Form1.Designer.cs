@@ -43,7 +43,7 @@
             button1.Name = "button1";
             button1.Size = new Size(94, 29);
             button1.TabIndex = 0;
-            button1.Text = "button1";
+            button1.Text = "Вычислить";
             button1.UseVisualStyleBackColor = true;
             button1.Click += button1_Click_1;
             // 
@@ -52,9 +52,9 @@
             label1.AutoSize = true;
             label1.Location = new Point(51, 361);
             label1.Name = "label1";
-            label1.Size = new Size(50, 20);
+            label1.Size = new Size(77, 20);
             label1.TabIndex = 1;
-            label1.Text = "label1";
+            label1.Text = "Интеграл:";
             // 
             // textBox1
             // 
