@@ -21,6 +21,7 @@ namespace skf
             {
                 return FunctionBody(x);
             }
+
         }
 
         public class TrapezoidalIntegration
@@ -64,7 +65,7 @@ namespace skf
         {
             string input = textBox1.Text;
             // Разбор входного текста и создание экземпляра Function, например:
-            function = new Function(x => 1/x);
+            function = new Function(x => 1 / (x));
 
             // Получение границ и количества шагов
             double lowerBound = Convert.ToDouble(textBox2.Text);
@@ -87,6 +88,8 @@ namespace skf
             g.DrawLine(pen, width / 2, 0, width / 2, height);
         }
 
+        private const double MAX_DRAW_VALUE = 1E5; // Максимальное значение для рисования графика
+
         private void DrawFunction(Graphics g)
         {
             // Рисование графика функции
@@ -102,6 +105,15 @@ namespace skf
                 double x2 = (i - width / 2) / 50.0;
                 double y1 = function.Evaluate(x1) * 50;
                 double y2 = function.Evaluate(x2) * 50;
+
+                if (double.IsInfinity(y1))
+                {
+                    y1 = Math.Sign(y1) * MAX_DRAW_VALUE;
+                }
+                if (double.IsInfinity(y2))
+                {
+                    y2 = Math.Sign(y2) * MAX_DRAW_VALUE;
+                }
 
                 g.DrawLine(pen, i - 1, (float)(height / 2 - y1), i, (float)(height / 2 - y2));
             }
