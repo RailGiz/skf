@@ -65,7 +65,7 @@ namespace skf
         {
             string input = textBox1.Text;
             // Разбор входного текста и создание экземпляра Function, например:
-            function = new Function(x => 1 / (x));
+            function = new Function(x => 1/x);
 
             // Получение границ и количества шагов
             double lowerBound = Convert.ToDouble(textBox2.Text);
@@ -139,6 +139,18 @@ namespace skf
                 int screenX2 = (int)((x2 * 50) + width / 2);
                 int screenY1 = height / 2 - (int)(y1 * 50);
                 int screenY2 = height / 2 - (int)(y2 * 50);
+
+                if (double.IsInfinity(y1))
+                {
+                    y1 = Math.Sign(y1) * MAX_DRAW_VALUE;
+                }
+                if (double.IsInfinity(y2))
+                {
+                    y2 = Math.Sign(y2) * MAX_DRAW_VALUE;
+                }
+
+                screenY1 = Math.Max(screenY1, height / 2 - (int)(MAX_DRAW_VALUE * 50));
+                screenY2 = Math.Max(screenY2, height / 2 - (int)(MAX_DRAW_VALUE * 50));
 
                 g.DrawLine(pen, screenX1, screenY1, screenX2, screenY2); // Верхняя сторона трапеции
                 g.DrawLine(pen, screenX1, screenY1, screenX1, height / 2); // Левая сторона трапеции
